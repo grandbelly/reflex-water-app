@@ -5,11 +5,6 @@ from water_app.states.common.dashboard_realtime import DashboardRealtimeState
 from water_app.components.layout import shell
 
 
-@rx.page(
-    route="/",
-    title="Dashboard | KSYS",
-    on_load=[DashboardRealtimeState.start_streaming]
-)
 def dashboard_page() -> rx.Component:
     """Main dashboard with real-time updates using MVC pattern"""
     return shell(
