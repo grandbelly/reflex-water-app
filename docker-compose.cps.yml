@@ -21,7 +21,7 @@ services:
       - POSTGRES_PASSWORD=water_password
       - POSTGRES_DB=water_db
     ports:
-      - "6543:5432"
+      - "6544:5432"
     volumes:
       - water_db_data:/home/postgres/pgdata/data
     command: ["-c", "ai.ollama_host=http://water-ollama:11434"]
