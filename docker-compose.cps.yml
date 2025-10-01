@@ -1,0 +1,102 @@
+version: "3.8"
+
+services:
+  # Ollama for AI model serving
+  water-ollama:
+    image: ollama/ollama:latest
+    container_name: water-ollama
+    ports:
+      - "11534:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - water-network
+
+  # PostgreSQL with TimescaleDB + pgai extensions
+  water-db:
+    image: timescale/timescaledb-ha:pg17
+    container_name: water-db
+    environment:
+      - POSTGRES_USER=water_user
+      - POSTGRES_PASSWORD=water_password
+      - POSTGRES_DB=water_db
+    ports:
+      - "6543:5432"
+    volumes:
+      - water_db_data:/home/postgres/pgdata/data
+    command: ["-c", "ai.ollama_host=http://water-ollama:11434"]
+    depends_on:
+      - water-ollama
+    networks:
+      - water-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U water_user"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # pgai vectorizer worker for automatic embeddings
+  water-vectorizer:
+    image: timescale/pgai-vectorizer-worker:latest
+    container_name: water-vectorizer
+    environment:
+      - PGAI_VECTORIZER_WORKER_DB_URL=postgres://water_user:water_password@water-db:5432/water_db
+      - OLLAMA_HOST=http://water-ollama:11434
+    command: ["--poll-interval", "5s", "--log-level", "DEBUG"]
+    depends_on:
+      water-db:
+        condition: service_healthy
+      water-ollama:
+        condition: service_started
+    networks:
+      - water-network
+
+  # Water Quality Monitoring App - CPS Version (Full Features)
+  water-app:
+    build:
+      context: .
+      args:
+        VERSION_TYPE: CPS
+    container_name: water-app-cps
+    ports:
+      - "13100:13100"  # Frontend (CPS uses 13100)
+      - "13101:13101"  # Backend (CPS uses 13101)
+    environment:
+      # Version Control
+      - VERSION_TYPE=CPS
+      - ENABLE_AI_FEATURES=true
+
+      # Database
+      - TS_DSN=postgresql://water_user:water_password@water-db:5432/water_db
+
+      # Application
+      - DOCKER_ENV=true
+      - APP_ENV=production
+      - TZ=Asia/Seoul
+
+      # AI Configuration (CPS only)
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-sk-your-key-here}
+      - EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+      - OLLAMA_HOST=http://water-ollama:11434
+      - OLLAMA_MODEL=nomic-embed-text
+
+    volumes:
+      - ./water_app:/app/water_app
+      - ./rxconfig.py:/app/rxconfig.py
+      - ./logs:/app/logs
+    networks:
+      - water-network
+    restart: unless-stopped
+    depends_on:
+      water-db:
+        condition: service_healthy
+
+networks:
+  water-network:
+    driver: bridge
+
+volumes:
+  water_db_data:
+    driver: local
+  ollama_data:
+    driver: local

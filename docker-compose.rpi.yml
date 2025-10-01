@@ -1,0 +1,64 @@
+version: "3.8"
+
+services:
+  # PostgreSQL with TimescaleDB (No AI extensions for RPI)
+  rpi-db:
+    image: timescale/timescaledb-ha:pg17
+    container_name: rpi-db
+    environment:
+      - POSTGRES_USER=water_user
+      - POSTGRES_PASSWORD=water_password
+      - POSTGRES_DB=water_db
+    ports:
+      - "5433:5432"  # Different port to avoid conflict with CPS
+    volumes:
+      - rpi_db_data:/home/postgres/pgdata/data
+    networks:
+      - rpi-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U water_user"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Water Quality Monitoring App - RPI Version (Lightweight)
+  rpi-app:
+    build:
+      context: .
+      args:
+        VERSION_TYPE: RPI
+    container_name: water-app-rpi
+    ports:
+      - "13000:13000"  # Frontend (RPI uses 13000)
+      - "13001:13001"  # Backend (RPI uses 13001)
+    environment:
+      # Version Control
+      - VERSION_TYPE=RPI
+      - ENABLE_AI_FEATURES=false
+
+      # Database
+      - TS_DSN=postgresql://water_user:water_password@rpi-db:5432/water_db
+
+      # Application
+      - DOCKER_ENV=true
+      - APP_ENV=production
+      - TZ=Asia/Seoul
+
+    volumes:
+      - ./water_app:/app/water_app
+      - ./rxconfig.py:/app/rxconfig.py
+      - ./logs:/app/logs
+    networks:
+      - rpi-network
+    restart: unless-stopped
+    depends_on:
+      rpi-db:
+        condition: service_healthy
+
+networks:
+  rpi-network:
+    driver: bridge
+
+volumes:
+  rpi_db_data:
+    driver: local

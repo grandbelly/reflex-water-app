@@ -1,0 +1,48 @@
+# Water Quality Monitoring Application - CPS Version (Full-Featured)
+# Includes AI/ML libraries for AI Insights and SCADA Alarms
+
+# Reflex Framework
+reflex==0.8.9
+reflex_chakra
+
+# Database
+psycopg[binary,pool]>=3.1
+asyncpg>=0.30.0
+sqlalchemy>=2.0.0
+
+# Data Models
+pydantic>=2.6
+
+# Caching
+cachetools>=5
+
+# Visualization
+plotly>=5.17.0
+
+# Data Analysis
+pandas>=2.0.0
+
+# Security
+cryptography>=41.0.0
+
+# File Monitoring
+watchdog>=3.0.0
+
+# Serialization
+dill>=0.3.8
+
+# ============================================================================
+# CPS-ONLY: AI/ML Dependencies
+# ============================================================================
+
+# Embedding Models
+sentence-transformers==2.2.2
+numpy>=1.24.3
+
+# OpenAI API
+openai>=1.35.0
+
+# Additional AI dependencies (if needed)
+# transformers
+# torch
+# langchain
