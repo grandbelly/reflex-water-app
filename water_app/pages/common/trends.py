@@ -2,7 +2,7 @@
 import reflex as rx
 from water_app.states.common.trend_state import TrendState as T
 from water_app.states.common.base import BaseState  # sidebar_collapsed를 위해 필요
-from ..components.layout import shell
+from water_appcomponents.layout import shell
 
 
 def _create_gradient(color: str, id: str):

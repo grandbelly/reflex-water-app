@@ -1,8 +1,8 @@
 """Unified Dashboard Page - MVC + Real-time Pattern"""
 import reflex as rx
-from ..views.dashboard_realtime_view import dashboard_realtime_page
+from water_app.views.dashboard_realtime_view import dashboard_realtime_page
 from water_app.states.common.dashboard_realtime import DashboardRealtimeState
-from ..components.layout import shell
+from water_app.components.layout import shell
 
 
 @rx.page(

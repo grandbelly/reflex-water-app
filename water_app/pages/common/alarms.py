@@ -7,7 +7,7 @@ Alarms Page - Unified rule-based alarm monitoring
 import reflex as rx
 from typing import Dict
 from water_app.states.common.alarms import AlarmsState
-from ..components.layout import shell
+from water_appcomponents.layout import shell
 
 
 def level_badge(level: int, level_name: str) -> rx.Component:

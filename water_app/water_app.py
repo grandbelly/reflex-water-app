@@ -16,7 +16,7 @@ VERSION_TYPE = os.getenv("VERSION_TYPE", "RPI").upper()  # Default to RPI
 
 # Database and security
 from .db import get_pool
-from .security import validate_security_on_startup
+from .security import validate_startup_security
 
 # ============================================================================
 # COMMON PAGES (RPI + CPS)
@@ -69,7 +69,7 @@ async def on_app_load():
     console.log(f"🚀 Water App starting... (VERSION: {VERSION_TYPE})")
 
     # Security validation
-    if not validate_security_on_startup():
+    if not validate_startup_security():
         console.error("❌ Security validation failed!")
         raise RuntimeError("Security validation failed")
 
