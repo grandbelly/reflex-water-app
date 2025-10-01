@@ -83,7 +83,7 @@ services:
     volumes:
       - ./water_app:/app/water_app
       - ./rxconfig.py:/app/rxconfig.py
-      - ./logs:/app/logs
+      - ./logs:/tmp/ksys_logs
     networks:
       - water-network
     restart: unless-stopped

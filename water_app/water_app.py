@@ -62,7 +62,6 @@ app = rx.App(
 # ============================================================================
 # STARTUP INITIALIZATION
 # ============================================================================
-@app.on_load
 async def on_app_load():
     """Application startup: security validation and database pool initialization"""
     console.log(f"🚀 Water App starting... (VERSION: {VERSION_TYPE})")
@@ -99,21 +98,21 @@ app.add_page(
     trends_page,
     route="/trends",
     title="Trends - Water Monitor",
-    on_load=TrendState.load_initial_data
+    
 )
 
 app.add_page(
     alarms_page,
     route="/alarms",
     title="Alarms - Water Monitor",
-    on_load=AlarmState.load_initial_data
+    
 )
 
 app.add_page(
     communications_page,
     route="/comm",
     title="Communications - Water Monitor",
-    on_load=CommunicationState.load_initial_data
+    
 )
 
 # ============================================================================
@@ -131,7 +130,6 @@ if VERSION_TYPE == "CPS":
         scada_alarm_comparison,
         route="/scada",
         title="SCADA Alarms - Water Monitor",
-        on_load=ScadaAlarmComparisonState.load_alarms
     )
 
     console.log("✅ Water App: 6 pages registered (RPI + CPS)")
