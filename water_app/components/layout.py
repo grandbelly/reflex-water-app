@@ -2,7 +2,7 @@ import reflex as rx
 import os
 
 # Import BaseState for sidebar toggle functionality (shared across all pages)
-from ..states.base import BaseState as B
+from water_app.states.common.base import BaseState as B
 
 # 앱 버전 가져오기 (FULL 또는 PART)
 APP_VERSION = os.getenv("APP_VERSION", "FULL").upper()

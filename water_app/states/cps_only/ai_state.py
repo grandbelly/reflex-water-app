@@ -9,7 +9,7 @@ import asyncio
 from reflex.utils import console
 from water_app.db_orm import get_async_session
 from water_app.services.ai_service import AIService
-from ..ai_engine.rag_engine import get_rag_response
+from water_app.ai_engine.rag_engine import get_rag_response
 
 
 class Message(Dict):

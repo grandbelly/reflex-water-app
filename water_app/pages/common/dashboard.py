@@ -10,7 +10,7 @@ from water_app.components.layout import shell
     title="Dashboard | KSYS",
     on_load=[DashboardRealtimeState.start_streaming]
 )
-def dashboard() -> rx.Component:
+def dashboard_page() -> rx.Component:
     """Main dashboard with real-time updates using MVC pattern"""
     return shell(
         dashboard_realtime_page(),

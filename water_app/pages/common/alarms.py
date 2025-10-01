@@ -6,8 +6,8 @@ Alarms Page - Unified rule-based alarm monitoring
 """
 import reflex as rx
 from typing import Dict
-from water_app.states.common.alarms import AlarmsState
-from water_appcomponents.layout import shell
+from water_app.states.common.alarms_state import AlarmsState
+from water_app.components.layout import shell
 
 
 def level_badge(level: int, level_name: str) -> rx.Component:
@@ -107,8 +107,8 @@ def alarms_page() -> rx.Component:
                 rx.spacer(),
                 rx.button(
                     "↻ Refresh",
-                    on_click=AlarmsState.refresh_data,
-                    loading=AlarmsState.loading,
+                    on_click=AlarmState.refresh_data,
+                    loading=AlarmState.loading,
                 ),
                 width="100%",
             ),
@@ -133,13 +133,13 @@ def alarms_page() -> rx.Component:
                     rx.segmented_control.item("24h", value="24"),
                     rx.segmented_control.item("7d", value="168"),
                     default_value="168",  # Changed from "24" to "168" (7 days)
-                    on_change=AlarmsState.set_hours_filter,
+                    on_change=AlarmState.set_hours_filter,
                 ),
                 rx.spacer(),
                 rx.switch(
                     "Show Acknowledged",
-                    checked=AlarmsState.show_acknowledged,
-                    on_change=AlarmsState.toggle_show_acknowledged,
+                    checked=AlarmState.show_acknowledged,
+                    on_change=AlarmState.toggle_show_acknowledged,
                 ),
                 width="100%",
                 align="center",
@@ -147,7 +147,7 @@ def alarms_page() -> rx.Component:
 
             # Last Update
             rx.text(
-                f"Last update: {AlarmsState.last_update}",
+                f"Last update: {AlarmState.last_update}",
                 size="1",
                 color="gray",
             ),

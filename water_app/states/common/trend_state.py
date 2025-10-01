@@ -7,8 +7,8 @@ from typing import List, Dict, Any, Optional, Union
 from datetime import datetime, timedelta, timezone
 import asyncio
 from reflex.utils import console
-from ..db_orm import get_async_session
-from ..services.trend_service import TrendService
+from water_app.db_orm import get_async_session
+from water_app.services.trend_service import TrendService
 
 
 class TrendState(rx.State):

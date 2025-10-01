@@ -1,6 +1,6 @@
 import reflex as rx
 
-from ..states.dashboard import DashboardState as D
+from water_app.states.dashboard import DashboardState as D
 
 
 def _fmt_num(v: rx.Var, digits: int) -> rx.Var:

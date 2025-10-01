@@ -4,7 +4,7 @@ Shows hourly data collection statistics as a heatmap
 """
 
 import reflex as rx
-from water_app.states.communication_state import CommunicationState
+from water_app.states.common.communication_state import CommunicationState
 from water_app.components.wrapped_heatmap import wrapped_grid_heatmap
 from water_app.components.layout import shell
 
@@ -61,7 +61,7 @@ def daily_trend_chart() -> rx.Component:
     )
 
 
-def communication_page() -> rx.Component:
+def communications_page() -> rx.Component:
     """Main communication monitoring page - Pandas Enhanced Version"""
     
     return shell(

@@ -29,10 +29,9 @@ from .pages.common.communications import communications_page
 # ============================================================================
 # COMMON STATES (RPI + CPS)
 # ============================================================================
-from .states.common.dashboard_state import DashboardState
-from .states.common.trends_state import TrendsState
+from .states.common.trend_state import TrendState
 from .states.common.alarms_state import AlarmsState
-from .states.common.communications_state import CommunicationsState
+from .states.common.communications_state import CommunicationState
 
 # ============================================================================
 # CPS-ONLY PAGES (Conditional Import)
@@ -93,28 +92,28 @@ app.add_page(
     dashboard_page,
     route="/",
     title="Dashboard - Water Monitor",
-    on_load=DashboardState.load_initial_data
+    on_load=[]
 )
 
 app.add_page(
     trends_page,
     route="/trends",
     title="Trends - Water Monitor",
-    on_load=TrendsState.load_initial_data
+    on_load=TrendState.load_initial_data
 )
 
 app.add_page(
     alarms_page,
     route="/alarms",
     title="Alarms - Water Monitor",
-    on_load=AlarmsState.load_initial_data
+    on_load=AlarmState.load_initial_data
 )
 
 app.add_page(
     communications_page,
     route="/comm",
     title="Communications - Water Monitor",
-    on_load=CommunicationsState.load_initial_data
+    on_load=CommunicationState.load_initial_data
 )
 
 # ============================================================================

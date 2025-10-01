@@ -2,7 +2,7 @@
 Improved time range selector components
 """
 import reflex as rx
-from ..config.time_ranges import TIME_RANGES, QUICK_PRESETS
+from water_appconfig.time_ranges import TIME_RANGES, QUICK_PRESETS
 from typing import Callable
 
 

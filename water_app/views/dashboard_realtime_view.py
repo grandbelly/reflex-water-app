@@ -2,7 +2,7 @@
 import reflex as rx
 import reflex_chakra as rc
 from typing import Dict, List
-from water_app.states.dashboard_realtime import DashboardRealtimeState
+from water_app.states.common.dashboard_realtime import DashboardRealtimeState
 
 
 def realtime_header() -> rx.Component:

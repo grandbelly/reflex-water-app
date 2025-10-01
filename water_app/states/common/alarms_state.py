@@ -80,7 +80,7 @@ class AlarmsState(rx.State):
     @rx.event(background=True)
     async def initialize(self):
         """Initialize - load data on mount"""
-        console.info("AlarmsState.initialize() called")
+        console.info("AlarmState.initialize() called")
 
         async with self:
             self.loading = True
