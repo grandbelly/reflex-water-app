@@ -79,6 +79,10 @@ services:
       - EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
       - OLLAMA_HOST=http://water-ollama:11434
       - OLLAMA_MODEL=nomic-embed-text
+      # Logging Configuration
+      - ENABLE_LOGGING=true
+      - LOG_LEVEL=INFO
+
 
     volumes:
       - ./water_app:/app/water_app
